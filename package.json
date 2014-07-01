@@ -2,7 +2,10 @@
   "name": "download-parser",
   "version": "0.1.0",
   "description": "download-parser",
-  "main": "index.js",
+  "bin": {
+    "cortex-download-filter": "./bin/filter.sh",
+    "cortex-download-update": "./bin/update.js"
+  },
   "scripts": {},
   "repository": {
     "type": "git",
@@ -18,10 +21,6 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/cortexjs/download-parser/issues"
-  },
-  "devDependencies": {
-    "mocha": "*",
-    "chai": "*"
   },
   "dependencies": {
     "concat-stream": "^1.4.6",
