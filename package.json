@@ -1,0 +1,27 @@
+{
+  "name": "download-parser",
+  "version": "0.1.0",
+  "description": "download-parser",
+  "main": "index.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cortexjs/download-parser.git"
+  },
+  "keywords": [
+    "download-parser"
+  ],
+  "engines": { 
+    "node": ">=0.11.0"
+  },
+  "author": "villador",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cortexjs/download-parser/issues"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "chai": "*"
+  }
+}
