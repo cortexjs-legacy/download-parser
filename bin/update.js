@@ -50,41 +50,62 @@ process.stdin.pipe(split(function(line) {
     rs[name] = daysDownload;
   }
 
-  
+
   downloads.mfetch(Object.keys(data), function(err, docs) {
     if(err) {
       console.error(err);
       return;
     }
     
-    docs = docs.map(function(d) {
-      return d.doc;
-    });
-
-    docs.forEach(function(doc) {
-      var nd = rs[doc._id];
-      nd.forEach(function(t) {
-        var time = t.time;
-        var cnt = t.count;
-        
-        var found = false;
-        for(var i = 0; !found && i < doc.daysDownload.length; i++) {
-          var od = doc.daysDownload[i];
-          if(od.time == time) {
-            found = true;
-            od.count += cnt;
-            break;
-          }
-        }
-        
-        if(!found) 
-          doc.daysDownload.push(nd);
-      });
+    var updates = [];
+    var news = docs.filter(function(d) {
+      return !d.doc;
     });
     
-    downloads.bulkSave(docs, function(err) {
+    news.forEach(function(n) {
+      var name = n.key;
+      updates.push({
+        _id: name,
+        name: name,
+        daysDownload: rs[name]
+      });
+    });
+
+    docs = docs.map(function(d) {
+      return d.doc;
+    }).filter(Boolean);
+
+
+    docs.forEach(function(doc) {
+      if(doc) {
+        var nd = rs[doc._id];
+        nd.forEach(function(t) {
+            var time = t.time;
+          var cnt = t.count;
+          
+          var found = false;
+          for(var i = 0; !found && i < doc.daysDownload.length; i++) {
+            var od = doc.daysDownload[i];
+            if(od.time == time) {
+              found = true;
+              od.count += cnt;
+              break;
+            }
+          }
+          
+          if(!found) 
+            doc.daysDownload.push(t);
+          
+          updates.push(doc);
+        });
+      }
+    });
+
+    
+    downloads.bulkSave(updates, function(err) {
       if(err)
         console.error(err);
+      console.log('done');
     });
   });
 }));
