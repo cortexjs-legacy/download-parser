@@ -1,7 +1,6 @@
 var ddoc = module.exports =
   { _id:'_design/app'
   , views: require("./views.js")
-  , validate_doc_update: require("./validate_doc_update.js")
   , language: "javascript"
   }
 
