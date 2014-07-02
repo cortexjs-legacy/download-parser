@@ -16,7 +16,7 @@ process.stdin.pipe(split(function(line) {
   var m = /\[(.*)\] (.*)/.exec(line);
   
   if(m) {
-    var time = new Date(moment(m[1], 'DD-MMM-YYYY').startOf('day').format());
+    var time = new Date(moment(m[1], 'DD-MMM-YYYY').startOf('day').format()).toISOString();
     var pkg = /\/([a-z0-9-\.]+)\/-\/([a-z0-9-\.]+)\.tgz/.exec(m[2]);
     if(pkg) {
       var name = pkg[1];
@@ -105,6 +105,7 @@ process.stdin.pipe(split(function(line) {
     downloads.bulkSave(updates, function(err) {
       if(err)
         console.error(err);
+      console.log('update: ' + updates.map(function(u) { return u._id;}).join(', '));
       console.log('done');
     });
   });
