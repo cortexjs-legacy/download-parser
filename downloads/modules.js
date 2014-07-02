@@ -1,5 +1,7 @@
 // Each of these is a string that will be require()'d in the couchapp
 
+// exports.moment = require('fs').readFileSync(require.resolve('moment'), 'utf8')
+
 exports.deep =
   [ "exports.deepEquals = deepEquals"
   , "exports.extend = deepExtend"
